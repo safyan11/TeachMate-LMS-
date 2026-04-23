@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Alpine JS for password toggle -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x/dist/cdn.min.js" defer></script>
 </head>
-<body class="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 font-sans">
+<body class="relative min-h-screen bg-slate-950 font-sans overflow-y-auto">
     <!-- Immersive Background with Soft Gradients -->
     <div class="absolute inset-0 z-0 pointer-events-none">
         <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[120px] animate-pulse" style="animation-duration: 8s;"></div>

@@ -56,7 +56,7 @@ $conn->close();
 <!-- Inject Tailwind CSS manually here because inc/header.php doesn't have it -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<body class="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 font-sans">
+<body class="relative min-h-screen bg-slate-950 font-sans overflow-y-auto">
     <!-- Immersive Background with Soft Gradients -->
     <div class="absolute inset-0 z-0 pointer-events-none">
         <!-- Animated glowing orbs -->
@@ -94,7 +94,7 @@ $conn->close();
         }
     </style>
 
-    <section class="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-12 flex justify-center items-center">
+    <section class="relative z-10 w-full min-h-screen px-4 sm:px-6 lg:px-8 py-12 flex justify-center items-center">
         <!-- Glassmorphism Login Card -->
         <div class="w-full max-w-lg rounded-3xl shadow-2xl border border-white/10 bg-slate-900/60 backdrop-blur-2xl animate-card p-8 sm:p-12 opacity-0">
             
