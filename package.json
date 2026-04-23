@@ -1,0 +1,21 @@
+{
+  "name": "RISS",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "description": "This website is developed by RISS",
+  "scripts": {
+    "tailwind": "npx tailwindcss -i src/input.css -o build/assets/css/style.css --minify --watch",
+    "prettier": "npx prettier --write 'build/**/*.{html,css,js,json,md}'",
+    "minify:js": "terser src/scripts.js -o build/assets/js/scripts.min.js --compress --mangle"
+  },
+  "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "lilconfig": "^3.1.3"
+  },
+  "author": "RISS",
+  "licenses": "RISS"
+}
