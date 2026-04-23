@@ -1,5 +1,5 @@
 <?php
-// ─── State for Student ───
+// --- State for Student ---
 $student_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 0;
 
 $r = $conn->query("SELECT COUNT(*) as c FROM notifications WHERE is_read=0");

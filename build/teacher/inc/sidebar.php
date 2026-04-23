@@ -1,5 +1,5 @@
 <?php
-// ─── Badge Logic for Teacher ───
+// --- Badge Logic for Teacher ---
 $teacher_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 0;
 
 $r = $conn->query("SELECT COUNT(*) as c FROM chat_messages WHERE receiver_id=$teacher_id AND is_read=0");
