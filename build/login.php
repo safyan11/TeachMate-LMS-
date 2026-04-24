@@ -22,9 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
             // Check if account is approved
-            if ($user['verify_status'] !== 'approved') {
-                $loginError = "Your account is not approved yet.";
+            if ($user['verify_status'] === 'pending') {
+                $loginError = "Your account is awaiting admin approval. Please try again later.";
+            } elseif ($user['verify_status'] === 'ban') {
+                $loginError = "Your account has been suspended by the admin.";
             }
+
             // Check password
             elseif (!password_verify($password, $user['password'])) {
                 $loginError = "Invalid password.";

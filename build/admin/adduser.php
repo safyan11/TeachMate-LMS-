@@ -12,10 +12,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newStatus = $_POST['current_status'] === 'approved' ? 'ban' : 'approved';
         $stmt = $conn->prepare("UPDATE users SET verify_status = ? WHERE id = ?");
         $stmt->bind_param("si", $newStatus, $user_id);
-        if ($stmt->execute()) $message = "User status updated to $newStatus.";
+        if ($stmt->execute()) {
+            $message = "User status updated to $newStatus.";
+            
+            // Notify Student if approved
+            if ($newStatus === 'approved') {
+                require_once "../inc/mailer.php";
+                $std_res = $conn->query("SELECT name, email FROM users WHERE id=$user_id");
+                if ($std_res && $std_res->num_rows > 0) {
+                    $std = $std_res->fetch_assoc();
+                    $std_name = $std['name'];
+                    $std_email = $std['email'];
+                    $subj = "Account Approved: Welcome to TeachMate LMS";
+                    $body = "Hello $std_name,<br><br>Congratulations! Your account on <b>TeachMate LMS</b> has been approved by the administrator.<br>You can now log in and start your learning journey.<br><br><a href='http://localhost/TeachMate/build/login.php' style='display:inline-block; padding:10px 20px; background-color:#4f46e5; color:white; text-decoration:none; border-radius:5px;'>Login Now</a><br><br>Regards,<br>TeachMate Team";
+                    sendEmail($std_email, $subj, $body);
+                }
+            }
+        }
         else $error = "Failed to update status.";
         $stmt->close();
     }
+
 
     // 2. Handle Role Assignment
     if (isset($_POST['assign_role'])) {

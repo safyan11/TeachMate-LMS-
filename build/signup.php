@@ -57,13 +57,27 @@
                         echo "<div class='bg-red-500/10 border border-red-500/40 text-red-400 p-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 mb-6 animate-pulse'><i class='fa-solid fa-circle-xmark'></i> Email already registered.</div>";
                     } else {
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                        $sql = "INSERT INTO users (name, email, password, role, verify_status) VALUES (?, ?, ?, 'student', 'approved')";
+                        $sql = "INSERT INTO users (name, email, password, role, verify_status) VALUES (?, ?, ?, 'student', 'pending')";
                         $stmt = $conn->prepare($sql);
+
                         $stmt->bind_param("sss", $name, $email, $hashed_password);
                         
                         if ($stmt->execute()) {
-                            echo "<div class='bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 p-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 mb-6'><i class='fa-solid fa-circle-check'></i> Account created! <a href='./login.php' class='underline hover:text-emerald-300'>Log in here</a></div>";
+                            // Notify All Admins
+                            require_once "inc/mailer.php";
+                            $admin_res = $conn->query("SELECT email FROM users WHERE role='admin'");
+                            if ($admin_res && $admin_res->num_rows > 0) {
+                                while ($admin = $admin_res->fetch_assoc()) {
+                                    $admin_email = $admin['email'];
+                                    $subj = "New Student Registration: $name";
+                                    $body = "Hello Admin,<br><br>A new student <b>$name</b> ($email) has registered on TeachMate LMS.<br>Please log in to the admin panel to review and approve their account.<br><br>Regards,<br>TeachMate System";
+                                    sendEmail($admin_email, $subj, $body);
+                                }
+                            }
+
+                            echo "<div class='bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 p-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 mb-6'><i class='fa-solid fa-circle-check'></i> Account created! Awaiting admin approval.</div>";
                         } else {
+
                             echo "<div class='bg-red-500/10 border border-red-500/40 text-red-400 p-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 mb-6 animate-pulse'><i class='fa-solid fa-circle-xmark'></i> Error creating account. Please try again.</div>";
                         }
                         $stmt->close();

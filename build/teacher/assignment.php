@@ -159,7 +159,7 @@ $assignments = $conn->query("SELECT a.*, c.title as course_title FROM assignment
                                                     <td class="px-6 py-4 text-slate-400 font-bold"><?= date('d M, Y \• H:i', strtotime($sub['submitted_at'])) ?></td>
                                                     <td class="px-6 py-4 text-blue-600 font-black tracking-tighter"><?= htmlspecialchars($sub['filename']) ?></td>
                                                     <td class="px-6 py-4 text-center">
-                                                        <a href="uploads/submissions/<?= urlencode($sub['filename']) ?>" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition mx-auto" download>
+                                                        <a href="../student/uploads/submissions/<?= urlencode($sub['filename']) ?>" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition mx-auto" download>
                                                             <i class="fa-solid fa-file-download"></i>
                                                         </a>
                                                     </td>
